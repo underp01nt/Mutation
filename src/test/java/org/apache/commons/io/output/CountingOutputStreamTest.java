@@ -78,11 +78,19 @@ public class CountingOutputStreamTest {
      */
     @Test
     public void testLargeFiles_IO84() throws Exception {
-        final long size = (long)Integer.MAX_VALUE + (long)1;
+        final long size1 = (long)Integer.MAX_VALUE + (long)1;
+        final long size2 = (long)Integer.MAX_VALUE;
 
-        final NullInputStream mock     = new NullInputStream(size);
+        final NullInputStream mock     = new NullInputStream(size1);
         final OutputStream nos         = new NullOutputStream();
         final CountingOutputStream cos = new CountingOutputStream(nos);
+
+        final NullInputStream mock2    = new NullInputStream(size2);
+        final CountingOutputStream cos2 = new CountingOutputStream(nos);
+        IOUtils.copyLarge(mock2, cos2);
+        assertEquals(Integer.MAX_VALUE, cos2.getCount());
+        assertEquals(Integer.MAX_VALUE, cos2.resetCount());
+
 
         // Test integer methods
         IOUtils.copyLarge(mock, cos);
@@ -103,8 +111,8 @@ public class CountingOutputStreamTest {
 
         // Test long methods
         IOUtils.copyLarge(mock, cos);
-        assertEquals("getByteCount()",   size, cos.getByteCount());
-        assertEquals("resetByteCount()", size, cos.resetByteCount());
+        assertEquals("getByteCount()",   size1, cos.getByteCount());
+        assertEquals("resetByteCount()", size1, cos.resetByteCount());
     }
 
     private void assertByteArrayEquals(final String msg, final byte[] array, final int start, final int end) {

@@ -96,6 +96,10 @@ public class NullReaderTest {
         final int lth    = 4;
         final int count5 = reader.read(chars, offset, lth);
         assertEquals("Read 5", lth, count5);
+
+        final Reader ready = new TestNullReader(15);
+        assertEquals(5, ready.read(new char[10], 5, 5));
+
         for (int i = offset; i < lth; i++) {
             assertEquals("Check Chars 3", i, chars[i]);
         }
@@ -147,6 +151,7 @@ public class NullReaderTest {
 
         // Reset
         reader.reset();
+
 
         // Read From marked position
         for (int i = 0; i < readlimit + 1; i++) {

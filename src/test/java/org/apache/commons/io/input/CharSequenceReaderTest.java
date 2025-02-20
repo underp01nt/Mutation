@@ -68,8 +68,8 @@ public class CharSequenceReaderTest {
         checkRead(reader, "Bar");
         assertEquals(-1, reader.skip(3));
         reader.reset();
-        assertEquals(2, reader.skip(2));
-        assertEquals(4, reader.skip(10));
+        assertEquals(0, reader.skip(0)); // boundary
+        assertEquals(6, reader.skip(10));
         assertEquals(-1, reader.skip(1));
         reader.close();
         assertEquals(6, reader.skip(20));

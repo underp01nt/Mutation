@@ -114,7 +114,7 @@ public class ReaderInputStreamTest {
         assertEquals(0, r.read(bytes, 0, 0));
         assertEquals(inStr.length(), r.read(bytes, 0, inStr.length()+1));
         // Should always return 0 for length == 0
-        assertEquals(0, r.read(bytes, 0, 0));
+        assertEquals(-1, r.read(bytes, 15, 15));
         r.close();
     }
 
@@ -128,6 +128,8 @@ public class ReaderInputStreamTest {
         assertEquals(-1, r.read(bytes, 0, 1));
         assertEquals(0, r.read(bytes, 0, 0));
         assertEquals(-1, r.read(bytes, 0, 1));
+        assertEquals(-1, r.read(bytes, 15,15));
+
         r.close();
     }
 

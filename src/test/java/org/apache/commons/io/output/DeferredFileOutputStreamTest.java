@@ -70,6 +70,10 @@ public class DeferredFileOutputStreamTest
     @Test
     public void testBelowThreshold()
     {
+        assertNotNull(new DeferredFileOutputStream(testBytes.length+1, 0, null));
+        assertNotNull(new DeferredFileOutputStream(testBytes.length+1, 0, ".tmp",
+                ".out", new File(".")));
+
         final DeferredFileOutputStream dfos =
                 new DeferredFileOutputStream(testBytes.length + 42, initialBufferSize, null);
         try
@@ -84,7 +88,7 @@ public class DeferredFileOutputStreamTest
 
         final byte[] resultBytes = dfos.getData();
         assertEquals(testBytes.length, resultBytes.length);
-        assertTrue(Arrays.equals(resultBytes, testBytes));
+        assertTrue(Arrays.equals(resultBytes, testBytes)    );
     }
 
     /**

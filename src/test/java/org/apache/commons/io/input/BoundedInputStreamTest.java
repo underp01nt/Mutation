@@ -55,6 +55,12 @@ public class BoundedInputStreamTest {
             assertEquals("limit < length byte[" + i + "]", hello[i], bounded.read());
         }
         assertEquals("limit < length end", -1, bounded.read());
+
+        // limit = 0 so return EOF immediately
+        bounded = new BoundedInputStream(new ByteArrayInputStream(helloWorld), 0);
+        assertEquals("limit = 0 should return EOF", -1, bounded.read());
+
+        assertEquals(0, bounded.available());
     }
 
     @Test
